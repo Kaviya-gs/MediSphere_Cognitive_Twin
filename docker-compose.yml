@@ -45,7 +45,7 @@ services:
 
   medisphere:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
     container_name: medisphere-app
     depends_on:

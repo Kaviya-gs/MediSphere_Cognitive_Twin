@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_CONFIG } from './api.config';
 
 export interface HealthTwin {
   id?: string;
@@ -22,7 +23,7 @@ export interface HealthTwin {
   providedIn: 'root'
 })
 export class HealthTwinService {
-  private apiUrl = 'http://localhost:8080/api/v1/health-twins';
+  private apiUrl = `${API_CONFIG.fullUrl}${API_CONFIG.endpoints.healthTwins}`;
 
   constructor(private http: HttpClient) { }
 

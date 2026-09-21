@@ -12,7 +12,7 @@ import { PatientService, Patient } from '../../services/patient.service';
     <div class="patient-list">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Patients</h2>
-        <button class="btn btn-primary" (click)="openAddPatientModal()">
+        <button class="btn btn-primary" type="button" (click)="openAddPatientModal()">
           <i class="fas fa-plus"></i> Add Patient
         </button>
       </div>
@@ -43,7 +43,8 @@ import { PatientService, Patient } from '../../services/patient.service';
         <div class="card-header">
           <div class="row">
             <div class="col-md-6">
-              <input 
+              <label class="visually-hidden" for="patient-search">Search patients</label>
+              <input id="patient-search"
                 type="text" 
                 class="form-control" 
                 placeholder="Search patient..."
@@ -51,7 +52,8 @@ import { PatientService, Patient } from '../../services/patient.service';
               >
             </div>
             <div class="col-md-6">
-              <select class="form-select" [(ngModel)]="filterStatus">
+              <label class="visually-hidden" for="patient-status">Filter patients by status</label>
+              <select id="patient-status" class="form-select" [(ngModel)]="filterStatus">
                 <option value="">All Status</option>
                 <option value="ONBOARDING">Onboarding</option>
                 <option value="ACTIVE">Active</option>
@@ -63,16 +65,17 @@ import { PatientService, Patient } from '../../services/patient.service';
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-hover">
+              <caption class="visually-hidden">Patient records from MongoDB</caption>
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>DOB</th>
-                  <th>Gender</th>
-                  <th>Email</th>
-                  <th>Contact</th>
-                  <th>Consent</th>
-                  <th>Status</th>
-                  <th>Actions</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">DOB</th>
+                  <th scope="col">Gender</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Contact</th>
+                  <th scope="col">Consent</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -98,10 +101,10 @@ import { PatientService, Patient } from '../../services/patient.service';
                     </span>
                   </td>
                   <td>
-                    <button class="btn btn-sm btn-info" [routerLink]="['/patients', patient.id]">
-                      <i class="fas fa-eye"></i>
+                    <button class="btn btn-sm btn-info" type="button" [attr.aria-label]="'View ' + patient.firstName + ' ' + patient.lastName" [routerLink]="['/patient', patient.patientId || patient.id]">
+                      <i class="fas fa-eye" aria-hidden="true"></i>
                     </button>
-                    <button class="btn btn-sm btn-primary" 
+                    <button class="btn btn-sm btn-primary" type="button" [attr.aria-label]="'Open health twin for ' + patient.firstName + ' ' + patient.lastName"
                       [routerLink]="['/health-twin', patient.id]">
                       <i class="fas fa-heartbeat"></i>
                     </button>

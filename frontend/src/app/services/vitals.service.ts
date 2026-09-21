@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_CONFIG } from './api.config';
 
 export interface Vitals {
   id?: string;
@@ -29,7 +30,7 @@ export interface Vitals {
   providedIn: 'root'
 })
 export class VitalsService {
-  private apiUrl = 'http://localhost:8080/api/v1/vitals';
+  private apiUrl = `${API_CONFIG.fullUrl}${API_CONFIG.endpoints.vitals}`;
 
   constructor(private http: HttpClient) { }
 

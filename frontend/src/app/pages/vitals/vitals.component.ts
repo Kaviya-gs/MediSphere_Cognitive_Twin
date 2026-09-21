@@ -12,8 +12,8 @@ import { VitalsService, Vitals } from '../../services/vitals.service';
     <div class="vitals">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Vital Signs Recording</h2>
-        <button class="btn btn-primary" (click)="toggleForm()">
-          <i class="fas fa-plus"></i> Record Vitals
+        <button class="btn btn-primary" type="button" (click)="toggleForm()" [attr.aria-expanded]="showForm">
+          <i class="fas fa-plus" aria-hidden="true"></i> Record Vitals
         </button>
       </div>
 
@@ -26,8 +26,9 @@ import { VitalsService, Vitals } from '../../services/vitals.service';
             <div class="card-body">
               <form (ngSubmit)="recordVitals()">
                 <div class="form-group mb-3">
-                  <label>Wearable Device ID</label>
+                  <label for="source-device">Wearable Device ID</label>
                   <input 
+                    id="source-device"
                     type="text" 
                     class="form-control" 
                     [(ngModel)]="newVitals.sourceDevice"
@@ -39,8 +40,9 @@ import { VitalsService, Vitals } from '../../services/vitals.service';
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group mb-3">
-                      <label>Heart Rate (bpm)</label>
+                      <label for="heart-rate">Heart Rate (bpm)</label>
                       <input 
+                        id="heart-rate"
                         type="number" 
                         class="form-control" 
                         [(ngModel)]="newVitals.heartRate"
@@ -50,8 +52,9 @@ import { VitalsService, Vitals } from '../../services/vitals.service';
                   </div>
                   <div class="col-md-6">
                     <div class="form-group mb-3">
-                      <label>Temperature (°C)</label>
+                      <label for="temperature">Temperature (°C)</label>
                       <input 
+                        id="temperature"
                         type="number" 
                         step="0.1"
                         class="form-control" 
@@ -65,8 +68,9 @@ import { VitalsService, Vitals } from '../../services/vitals.service';
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group mb-3">
-                      <label>Systolic BP (mmHg)</label>
+                      <label for="systolic-bp">Systolic BP (mmHg)</label>
                       <input 
+                        id="systolic-bp"
                         type="number" 
                         class="form-control" 
                         [(ngModel)]="newVitals.systolicBP"
@@ -76,8 +80,9 @@ import { VitalsService, Vitals } from '../../services/vitals.service';
                   </div>
                   <div class="col-md-6">
                     <div class="form-group mb-3">
-                      <label>Diastolic BP (mmHg)</label>
+                      <label for="diastolic-bp">Diastolic BP (mmHg)</label>
                       <input 
+                        id="diastolic-bp"
                         type="number" 
                         class="form-control" 
                         [(ngModel)]="newVitals.diastolicBP"
@@ -90,8 +95,9 @@ import { VitalsService, Vitals } from '../../services/vitals.service';
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group mb-3">
-                      <label>O2 Saturation (%)</label>
+                      <label for="oxygen-saturation">O2 Saturation (%)</label>
                       <input 
+                        id="oxygen-saturation"
                         type="number" 
                         class="form-control" 
                         [(ngModel)]="newVitals.oxygenSaturation"
@@ -101,8 +107,9 @@ import { VitalsService, Vitals } from '../../services/vitals.service';
                   </div>
                   <div class="col-md-6">
                     <div class="form-group mb-3">
-                      <label>Blood Glucose (mg/dL)</label>
+                      <label for="blood-glucose">Blood Glucose (mg/dL)</label>
                       <input 
+                        id="blood-glucose"
                         type="number" 
                         class="form-control" 
                         [(ngModel)]="newVitals.bloodGlucose"
@@ -128,15 +135,16 @@ import { VitalsService, Vitals } from '../../services/vitals.service';
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-sm">
+                  <caption class="visually-hidden">Recent vital sign records from MongoDB</caption>
                   <thead>
                     <tr>
-                      <th>Date/Time</th>
-                      <th>HR</th>
-                      <th>BP</th>
-                      <th>SpO2</th>
-                      <th>Temp</th>
-                      <th>Quality</th>
-                      <th>Status</th>
+                      <th scope="col">Date/Time</th>
+                      <th scope="col">HR</th>
+                      <th scope="col">BP</th>
+                      <th scope="col">SpO2</th>
+                      <th scope="col">Temp</th>
+                      <th scope="col">Quality</th>
+                      <th scope="col">Status</th>
                     </tr>
                   </thead>
                   <tbody>

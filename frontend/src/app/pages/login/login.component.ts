@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ import { FormsModule } from '@angular/forms';
               [(ngModel)]="username"
               name="username"
               placeholder="Enter your username"
+              [disabled]="isLoading"
             >
           </div>
 
@@ -38,6 +40,7 @@ import { FormsModule } from '@angular/forms';
               [(ngModel)]="password"
               name="password"
               placeholder="Enter your password"
+              [disabled]="isLoading"
             >
           </div>
 
@@ -48,23 +51,28 @@ import { FormsModule } from '@angular/forms';
               id="remember"
               [(ngModel)]="rememberMe"
               name="rememberMe"
+              [disabled]="isLoading"
             >
             <label class="form-check-label" for="remember">
               Remember me
             </label>
           </div>
 
-          <button type="submit" class="btn btn-primary w-100 mb-3">
-            <i class="fas fa-sign-in-alt"></i> Sign In
+          <button type="submit" class="btn btn-primary w-100 mb-3" [disabled]="isLoading">
+            <i class="fas fa-sign-in-alt"></i> {{ isLoading ? 'Signing in...' : 'Sign In' }}
           </button>
         </form>
+
+        <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+          <i class="fas fa-exclamation-circle"></i> {{ errorMessage }}
+        </div>
 
         <hr>
 
         <div class="login-footer">
           <p class="text-muted small mb-2">Demo Credentials:</p>
-          <p class="text-muted small">Username: admin</p>
-          <p class="text-muted small">Password: demo123</p>
+          <p class="text-muted small"><strong>Admin:</strong> admin / admin123</p>
+          <p class="text-muted small"><strong>Patient:</strong> ava.thompson / patient123</p>
         </div>
 
         <div class="alert alert-info mt-4">
@@ -115,6 +123,10 @@ import { FormsModule } from '@angular/forms';
       border-radius: 5px;
       padding: 0.75rem 1rem;
     }
+    .form-control:disabled {
+      background-color: #e9ecef;
+      cursor: not-allowed;
+    }
     .btn-primary {
       background-color: #667eea;
       border: none;
@@ -122,12 +134,19 @@ import { FormsModule } from '@angular/forms';
       font-weight: 600;
       transition: all 0.3s ease;
     }
-    .btn-primary:hover {
+    .btn-primary:hover:not(:disabled) {
       background-color: #764ba2;
+    }
+    .btn-primary:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
     }
     .login-footer {
       background-color: #f8f9fa;
       padding: 15px;
+      border-radius: 5px;
+    }
+    .alert {
       border-radius: 5px;
     }
   `]
@@ -136,14 +155,43 @@ export class LoginComponent {
   username = '';
   password = '';
   rememberMe = false;
+  isLoading = false;
+  errorMessage = '';
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   login(): void {
-    // For demo purposes, just navigate to dashboard
-    // In production, this would authenticate with backend
-    if (this.username && this.password) {
-      this.router.navigate(['/dashboard']);
+    // Validate input
+    if (!this.username || !this.password) {
+      this.errorMessage = 'Username and password are required';
+      return;
     }
+
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    this.authService.login(this.username, this.password).subscribe({
+      next: (response) => {
+        console.log('Login successful:', response.username, response.role);
+        this.isLoading = false;
+        // Navigate to dashboard
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        this.isLoading = false;
+        console.error('Login error:', error);
+        
+        if (error.status === 401 || error.status === 403) {
+          this.errorMessage = 'Invalid username or password';
+        } else if (error.status === 0) {
+          this.errorMessage = 'Cannot connect to backend. Ensure Spring Boot is running on http://localhost:8080';
+        } else {
+          this.errorMessage = error.error?.error || 'Login failed. Please try again.';
+        }
+      }
+    });
   }
 }

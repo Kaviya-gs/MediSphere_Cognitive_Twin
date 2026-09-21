@@ -4,12 +4,16 @@ import { Observable } from 'rxjs';
 
 export interface Patient {
   id?: string;
+  patientId?: string;
   firstName: string;
   lastName: string;
   dateOfBirth: string;
   gender: string;
   email: string;
   contact: string;
+  conditions?: string[];
+  medications?: string[];
+  allergies?: string[];
   consentProvided?: boolean;
   hipaaAcknowledged?: boolean;
   status?: string;

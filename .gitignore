@@ -1,86 +1,136 @@
+# Backend (Java/Maven)
+backend/target/
+backend/.classpath
+backend/.project
+backend/.settings/
+backend/*.jar
+backend/*.war
+
+# Frontend (Node/Angular)
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/*.tgz
+
+# AI Service (Python)
+ai-service/venv/
+ai-service/env/
+ai-service/__pycache__/
+ai-service/*.pyc
+ai-service/.pytest_cache/
+ai-service/*.egg-info/
+ai-service/dist/
+ai-service/build/
+
 # IDE
-.idea/
 .vscode/
+.idea/
 *.swp
 *.swo
 *~
 .DS_Store
+*.sublime-project
+*.sublime-workspace
 
-# Build
-target/
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
-
-# Maven
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-
-# Gradle
-.gradle/
-build/
-gradle-app.setting
-.gradletasknamecache
-
-# Log files
-logs/
-*.log
-*.log.*
-
-# Environment variables
+# Environment
 .env
 .env.local
 .env.*.local
+*.key
+*.pem
 
-# Application properties
-application-local.properties
-application-dev.properties
-application-prod.properties
-
-# Secrets
-src/main/resources/application-secret.yml
-secrets/
-.vault-token
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
 
 # Docker
 .dockerignore
 docker-compose.override.yml
 
-# Database
-data/
-*.db
-*.sqlite
-
-# Cache
-.cache/
-*.cache
-
-# Node (if frontend is included)
-node_modules/
-dist/
-npm-debug.log
-
 # OS
 Thumbs.db
 .DS_Store
+._*
+
+# Build artifacts
+build/
+dist/
+out/
+
+# Database
+*.db
+*.sqlite
+.mongo_data/
+mongodb-data/
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+
+# Cache
+.cache/
+.env_cache
+
+# Node/npm
+package-lock.json
+yarn.lock
+
+# Sensitive files
+secrets.yml
+config.local.yml
+credentials.json
+
+# IDE specific
+.vscode/launch.json
+.vscode/tasks.json
 
 # Test coverage
 coverage/
-.coverage
-*.gcda
-*.gcno
+.nyc_output/
+htmlcov/
 
-# SonarQube
-.sonarqube/
+# Python
+*.egg
+*.egg-info
+dist
+build
+.Python
+develop-eggs
+downloads
+eggs
+.eggs
+lib
+lib64
+parts
+sdist
+var
+wheels
+*.egg-info
+.installed.cfg
+*.egg
 
-# Temp files
-tmp/
-temp/
+# Virtual environments
+ENV/
+env/
+venv/
+.venv
+
+# Root level files to ignore (keep only essential ones)
+# .gitignore - keep
+# README.md - keep
+# docker-compose.yml - keep
+# .env.example - keep
+# Delete old root-level Java/Node files - they've been moved to backend/frontend
+
+# Old structure (being migrated)
+src/
+pom.xml
+package.json
+package-lock.json
+Dockerfile
+node_modules/
+target/
+dist/

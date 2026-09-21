@@ -13,10 +13,10 @@ import { PatientService, Patient } from '../../services/patient.service';
       <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
           <h2>{{ patient.firstName }} {{ patient.lastName }}</h2>
-          <p class="text-muted">Patient ID: {{ patient.id }}</p>
+          <p class="text-muted">MRN: {{ patient.patientId || patient.id }} · {{ patient.gender }} · DOB: {{ patient.dateOfBirth }}</p>
         </div>
-        <button class="btn btn-primary" (click)="savePatient()">
-          <i class="fas fa-save"></i> Save Changes
+        <button class="btn btn-primary" type="button" (click)="savePatient()">
+          <i class="fas fa-save" aria-hidden="true"></i> Save Changes
         </button>
       </div>
 
@@ -28,20 +28,20 @@ import { PatientService, Patient } from '../../services/patient.service';
             </div>
             <div class="card-body">
               <div class="form-group mb-3">
-                <label>First Name</label>
-                <input type="text" class="form-control" [(ngModel)]="patient.firstName">
+                <label for="first-name">First Name</label>
+                <input id="first-name" type="text" class="form-control" [(ngModel)]="patient.firstName">
               </div>
               <div class="form-group mb-3">
-                <label>Last Name</label>
-                <input type="text" class="form-control" [(ngModel)]="patient.lastName">
+                <label for="last-name">Last Name</label>
+                <input id="last-name" type="text" class="form-control" [(ngModel)]="patient.lastName">
               </div>
               <div class="form-group mb-3">
-                <label>Date of Birth</label>
-                <input type="date" class="form-control" [(ngModel)]="patient.dateOfBirth">
+                <label for="date-of-birth">Date of Birth</label>
+                <input id="date-of-birth" type="date" class="form-control" [(ngModel)]="patient.dateOfBirth">
               </div>
               <div class="form-group mb-3">
-                <label>Gender</label>
-                <select class="form-select" [(ngModel)]="patient.gender">
+                <label for="gender">Gender</label>
+                <select id="gender" class="form-select" [(ngModel)]="patient.gender">
                   <option>MALE</option>
                   <option>FEMALE</option>
                   <option>OTHER</option>
@@ -58,16 +58,22 @@ import { PatientService, Patient } from '../../services/patient.service';
             </div>
             <div class="card-body">
               <div class="form-group mb-3">
-                <label>Email</label>
-                <input type="email" class="form-control" [(ngModel)]="patient.email">
+                <label for="email">Email</label>
+                <input id="email" type="email" class="form-control" [(ngModel)]="patient.email">
               </div>
               <div class="form-group mb-3">
-                <label>Phone</label>
-                <input type="tel" class="form-control" [(ngModel)]="patient.contact">
+                <label for="phone">Phone</label>
+                <input id="phone" type="tel" class="form-control" [(ngModel)]="patient.contact">
               </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-md-4"><div class="card h-100"><div class="card-header"><h5 class="mb-0">Conditions</h5></div><div class="card-body"><p *ngFor="let condition of patient.conditions">{{ condition }}</p><p class="text-muted" *ngIf="!patient.conditions?.length">None recorded</p></div></div></div>
+        <div class="col-md-4"><div class="card h-100"><div class="card-header"><h5 class="mb-0">Medications</h5></div><div class="card-body"><p *ngFor="let medication of patient.medications">{{ medication }}</p><p class="text-muted" *ngIf="!patient.medications?.length">None recorded</p></div></div></div>
+        <div class="col-md-4"><div class="card h-100"><div class="card-header"><h5 class="mb-0">Allergies</h5></div><div class="card-body"><p *ngFor="let allergy of patient.allergies">{{ allergy }}</p><p class="text-muted" *ngIf="!patient.allergies?.length">None recorded</p></div></div></div>
       </div>
 
       <div class="row">
@@ -81,6 +87,7 @@ import { PatientService, Patient } from '../../services/patient.service';
                 <input 
                   type="checkbox" 
                   class="form-check-input" 
+                  id="data-processing-consent"
                   [(ngModel)]="patient.consentProvided"
                   (change)="updateConsent()"
                 >
@@ -92,6 +99,7 @@ import { PatientService, Patient } from '../../services/patient.service';
                 <input 
                   type="checkbox" 
                   class="form-check-input" 
+                  id="hipaa-acknowledgment"
                   [(ngModel)]="patient.hipaaAcknowledged"
                   (change)="updateHipaa()"
                 >
