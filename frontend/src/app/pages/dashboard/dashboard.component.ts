@@ -65,14 +65,14 @@ interface Patient {
         </article>
 
 
-        <article class="metric-card">
+      <article class="metric-card">
           <div class="metric-icon heart">
             <i class="fas fa-heart-pulse"></i>
           </div>
 
           <div>
             <p>Active health twins</p>
-            <strong>{{ totalHealthTwins }}</strong>
+            <strong>{{ totalHealthTwins || 0 }}</strong>
             <small>Twin service status</small>
           </div>
         </article>
@@ -85,7 +85,7 @@ interface Patient {
 
           <div>
             <p>FHIR resources</p>
-            <strong>{{ totalFhirResources }}</strong>
+            <strong>{{ totalFhirResources || 0 }}</strong>
             <small>Validated and synced</small>
           </div>
         </article>
@@ -98,7 +98,7 @@ interface Patient {
 
           <div>
             <p>Active alerts</p>
-            <strong>{{ totalActiveAlerts }}</strong>
+            <strong>{{ totalActiveAlerts || 0 }}</strong>
             <small>Review required</small>
           </div>
         </article>
@@ -1372,19 +1372,40 @@ export class DashboardComponent implements OnInit {
   }
 
   private loadDashboardMetrics(): void {
+    // Load active health twins (patient count)
     this.healthTwinService.countTotalTwins().subscribe({
-      next: count => this.totalHealthTwins = count,
-      error: () => this.totalHealthTwins = 0
+      next: (count) => {
+        console.log('Dashboard: Loaded health twins count:', count);
+        this.totalHealthTwins = count;
+      },
+      error: (err) => {
+        console.error('Dashboard: Failed to load health twins:', err);
+        this.totalHealthTwins = 0;
+      }
     });
 
+    // Load FHIR resources (labs)
     this.clinicalDataService.getResources().subscribe({
-      next: resources => this.totalFhirResources = resources.length,
-      error: () => this.totalFhirResources = 0
+      next: (resources) => {
+        console.log('Dashboard: Loaded FHIR resources:', resources?.length || 0);
+        this.totalFhirResources = resources?.length || 0;
+      },
+      error: (err) => {
+        console.error('Dashboard: Failed to load FHIR resources:', err);
+        this.totalFhirResources = 0;
+      }
     });
 
+    // Load active alerts
     this.riskAlertService.getAllActiveAlerts().subscribe({
-      next: alerts => this.totalActiveAlerts = alerts.length,
-      error: () => this.totalActiveAlerts = 0
+      next: (alerts) => {
+        console.log('Dashboard: Loaded active alerts:', alerts?.length || 0);
+        this.totalActiveAlerts = alerts?.length || 0;
+      },
+      error: (err) => {
+        console.error('Dashboard: Failed to load active alerts:', err);
+        this.totalActiveAlerts = 0;
+      }
     });
   }
 

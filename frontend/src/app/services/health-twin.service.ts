@@ -52,7 +52,9 @@ export class HealthTwinService {
   }
 
   countTotalTwins(): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/stats/total-count`);
+    // Call the patient count endpoint instead (each patient = 1 health twin)
+    const patientsUrl = `${API_CONFIG.fullUrl}/patients/stats/count`;
+    return this.http.get<number>(patientsUrl);
   }
 
   updateRiskScore(twinId: string, riskType: string, score: number): Observable<void> {
