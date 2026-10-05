@@ -5,7 +5,6 @@ import { PatientService } from '../../services/patient.service';
 import { AuthService } from '../../services/auth.service';
 import { HealthTwinService } from '../../services/health-twin.service';
 import { ClinicalDataService } from '../../services/clinical-data.service';
-import { RiskAlertService } from '../../services/risk-alert.service';
 
 interface Patient {
   id?: string;
@@ -1361,8 +1360,7 @@ export class DashboardComponent implements OnInit {
     private patientService: PatientService,
     private authService: AuthService,
     private healthTwinService: HealthTwinService,
-    private clinicalDataService: ClinicalDataService,
-    private riskAlertService: RiskAlertService
+    private clinicalDataService: ClinicalDataService
   ) { }
 
 
@@ -1396,11 +1394,11 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    // Load active alerts
-    this.riskAlertService.getAllActiveAlerts().subscribe({
-      next: (alerts) => {
-        console.log('Dashboard: Loaded active alerts:', alerts?.length || 0);
-        this.totalActiveAlerts = alerts?.length || 0;
+    // Load the authoritative pending-alert count
+    this.clinicalDataService.getAlertDashboard().subscribe({
+      next: (dashboard) => {
+        console.log('Dashboard: Loaded active alerts:', dashboard.totalPending);
+        this.totalActiveAlerts = dashboard.totalPending;
       },
       error: (err) => {
         console.error('Dashboard: Failed to load active alerts:', err);

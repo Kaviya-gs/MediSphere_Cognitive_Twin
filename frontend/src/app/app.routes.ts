@@ -6,12 +6,14 @@ import { VitalsComponent } from './pages/vitals/vitals.component';
 import { ConsentComponent } from './pages/consent/consent.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ClinicalPageComponent } from './pages/clinical-page/clinical-page.component';
+import { CarePlanComponent } from './pages/clinical-page/care-plan.component';
+import { MasterDashboardComponent } from './pages/dashboard/master-dashboard.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: ClinicalPageComponent, data: { page: 'dashboard' } },
+  { path: 'dashboard', component: MasterDashboardComponent },
   { path: 'patients', component: PatientListComponent },
   { path: 'patient/:id', component: PatientDetailComponent },
   { path: 'patients/:id', component: PatientDetailComponent },
@@ -24,7 +26,7 @@ export const routes: Routes = [
   { path: 'consent/:patientId', component: ConsentComponent },
   { path: 'audit', component: ClinicalPageComponent, data: { page: 'audit' } },
   { path: 'predictions', component: ClinicalPageComponent, data: { page: 'predictions' } },
-  { path: 'care-plan', component: ClinicalPageComponent, data: { page: 'care-plan' } },
+  { path: 'care-plan', component: CarePlanComponent },
   { path: 'model-management', component: ClinicalPageComponent, data: { page: 'models' } },
   { path: 'federated-learning', component: ClinicalPageComponent, data: { page: 'federated' } },
   { path: '404', component: NotFoundComponent },
