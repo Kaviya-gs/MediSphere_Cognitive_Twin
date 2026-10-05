@@ -4,7 +4,7 @@
 
 MediSphere is an AI-powered healthcare platform that creates digital health twins for patients and predicts future health risks using continuous learning models.
 
-**Current Status:** ✅ **FULLY OPERATIONAL**
+**Current Status:** 
 - Backend (Spring Boot) running on port 8080
 - Frontend (Angular) running on port 4200
 - MongoDB connected with real patient data (10+ patients, 32+ vitals, 20+ lab results)
@@ -21,7 +21,7 @@ MediSphere is an AI-powered healthcare platform that creates digital health twin
 # MongoDB: localhost:27017/medisphere_cognitive_twin
 ```
 
-### Dashboard Metrics (Now Fixed ✅)
+### Dashboard Metrics 
 
 The dashboard overview now displays:
 - **Total Patients**: 10 (from MongoDB)
@@ -29,7 +29,7 @@ The dashboard overview now displays:
 - **FHIR Resources**: 20+ (lab results)
 - **Active Alerts**: 17 (real-time monitoring)
 
-### Vitals Stream (Now Fixed ✅)
+### Vitals Stream 
 
 The vitals page displays:
 - Real-time wearable vital signs (Heart Rate, BP, SpO2, Temp, RR)
@@ -105,14 +105,14 @@ medisphere/
 - Java 25 (for local backend dev)
 - Python 3.9+ (for AI service dev)
 
-### Option 1: Docker Compose (Recommended)
+### Option 1: Docker Compose 
 
 ```bash
 git clone <repository-url>
 cd medisphere
 ```
 
-### 2. Using Docker Compose (Recommended)
+### 2. Using Docker Compose 
 
 Start all services with a single command:
 
@@ -318,7 +318,7 @@ pytest
 
 ---
 
-## � Recent Fixes (Dashboard & Vitals)
+## � Recent Fixes
 
 ### Issue: Dashboard metrics and vitals not showing values
 **Root Cause**: Frontend services were calling endpoints that either didn't exist or returned different data structures
